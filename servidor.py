@@ -68,10 +68,25 @@ class ThreadTratador(threading.Thread):
                 payload = mensagem["payload"]
         
                 destino = mensagem["destino"] 
+
+                if destino in clientes:
+                    data = payload.encode(ENCODE)
+            
+                    sock.sendto(data, clientes[destino])
+                else:
+
+                    text = 'Usuário inexistente!'
+                    data = text.encode(ENCODE)
+                    sock.sendto(data,address)
+
+            if mensagem["acao"] == "consulta":
+
+                # 2. Consultar clientes
+                
+                cli = str(clientes)
+                data = cli.encode(ENCODE)
         
-                data = payload.encode(ENCODE)
-        
-                sock.sendto(data, clientes[destino])
+                sock.sendto(data, address)
 
                 
             """text = "Sucesso"

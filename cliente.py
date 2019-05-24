@@ -27,7 +27,7 @@ def cliente():
 
     data = ""    
     
-    choice = input('Digite E para enviar mensagem: ')        
+    choice = input('Digite R para se registrar: ')        
 
     if choice == 'R':
         
@@ -50,9 +50,26 @@ def cliente():
 
         print(data) 
 
+    choice = input('Digite C  para consultar os clientes logados ')        
+
+    if choice == 'C':
+
+        text = {'acao': 'consulta'}
+        text = str(text)
+        
+        data = text.encode(ENCODE)
+        sock.sendto(data, dest)
+        
+        data, dest = sock.recvfrom(MAX_BYTES)
+      
+        data = data.decode(ENCODE)
+
+        print(data) 
+
+
     while True:    
       
-        choice = input('Digite E  para enviar mensagem ou C para os consultas usuários conectados: ')        
+        choice = input('Digite E  para enviar mensagem: ')        
 
         text = ''
 
@@ -76,8 +93,6 @@ def cliente():
             escuta.start()
 
             escuta.join()
-
-        
 
         
 class Listen(threading.Thread):
